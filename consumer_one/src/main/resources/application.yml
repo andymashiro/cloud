@@ -1,0 +1,12 @@
+eureka:
+  client:
+    serviceUrl: #注册中心的注册地址
+      defaultZone: http://admin:123456@localhost:5678/eureka/
+server:
+  port: 8002  #服务端口号
+spring:
+  application:
+    name: consumerOne #服务名称--调用的时候根据名称来调用该服务的方法
+feign:  #开启服务熔断服务降级
+  hystrix:
+    enabled: true

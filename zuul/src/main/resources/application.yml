@@ -1,0 +1,43 @@
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5 #获取服务列表的周期
+    service-url:
+      defaultZone: http://admin:123456@localhost:5678/eureka/  #注册中心地址
+
+server:
+  port: 9001
+
+spring:
+  application:
+    name: zuul_server
+
+#映射规则
+zuul:
+  routes:
+    consumerOne: #这里是路由的id，只保证唯一性即可，不要求格式
+      path: /consumerOne/**  #这里是映射的路径
+      service-id: consumerOne
+
+#r指定url设置
+#ribbon:
+#  eureka:
+#    enable: false #为Ribbon禁用Eureka
+#
+#consumerOne:
+#  ribbon:
+#    listOfServers: localhost:9000
+
+ribbon:
+  ConnectTimeout: 250 #连接超时
+  ReadTimeout: 2000 #通信超时时间
+  OkToRetryOnAllOperations: true #是否对所有操作重试
+  MaxAutoRetriesNextServer: 2 #同一服务不同实例的重试次数
+  MaxAutoRetries: 1 #同一实例的重试次数
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000 #熔断超时时长

@@ -1,0 +1,29 @@
+server:
+  port: 5678
+
+  #安全认证的配置
+spring:
+  security:
+    basic:
+      enabled: true #开启认证
+    user:
+      name: admin
+      password: 123456
+
+eureka:
+  instance:
+    hostname: localhost
+    #hostname: eureka0001.com         #eureka服务端的实例名称
+  client:
+    register-with-eureka: false     #false表示不向注册中心注册自己。
+    fetch-registry: false           #false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
+    service-url:
+      #单机设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址（单机）。
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
+
+      #Eureka高复用时设置其他的Eureka之间通信
+      #defaultZone: http://eureka7003.com:7003/eureka/,http://eureka7004.com:7004/eureka/
+      #defaultZone: http://eureka7003.com:7003/eureka/
+    #server:
+    #enable-self-preservation: false   #Eureka服务端关闭心跳连接测试
+
